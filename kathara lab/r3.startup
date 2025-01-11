@@ -1,0 +1,5 @@
+/etc/init.d/networking restart
+
+ip route add 100.0.0.4/31 via 100.0.0.7
+ip route add 100.0.0.0/31 via 100.0.0.2
+ip route add default via 100.0.0.7

@@ -1,0 +1,29 @@
+/etc/init.d/networking restart
+
+ip route add 100.0.0.4/31 via 100.0.0.1
+ip route add 100.0.0.6/31 via 100.0.0.3
+ip route add default via 100.0.0.9
+
+#iptables -P INPUT DROP
+#iptables -P FORWARD DROP
+
+iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+
+iptables -A OUTPUT -s 192.168.0.0/24 -j ACCEPT
+
+#NAT
+iptables -t nat -A POSTROUTING -o eth0 -s 192.168.0.0/24 -j MASQUERADE
+
+iptables -A INPUT -d 192.168.0.0/24 ! -i eth1 -j DROP
+
+iptables -A INPUT -p tcp --dport 22 -j ACCEPT
+iptables -A INPUT -p tcp --dport 1194 -j ACCEPT
+
+iptables -A FORWARD -p tcp --dport 22 -j ACCEPT
+iptables -A FORWARD -p tcp --dport 1194 -j ACCEPT
+
+iptables -A INPUT -d 192.168.0.0/24 ! -p tcp --dport 22 -j DROP
+#iptables -A INPUT -d 192.168.0.0/24 ! -p tcp --dport 1194 -j DROP
+
+iptables -A FORWARD -d 192.168.0.0/24 ! -p tcp --dport 22 -j DROP 
+#iptables -A FORWARD -d 192.168.0.0/24 ! -p tcp --dport 1194 -j DROP

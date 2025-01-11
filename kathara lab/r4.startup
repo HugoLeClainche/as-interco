@@ -1,0 +1,10 @@
+/etc/init.d/networking restart
+
+ip route add 100.0.0.0/31 via 100.0.0.4
+ip route add 100.0.0.2/31 via 100.0.0.6
+
+systemctl start frr
+
+iptables -P FORWARD DROP
+iptables -A FORWARD -p tcp --dport 22 -m state --state NEW,ESTABLISHED -j ACCEPT
+iptables -A FORWARD -p tcp --sport 22 -m state --state ESTABLISHED -j ACCEPT
