@@ -41,9 +41,7 @@ This project is a step-by-step implementation of a complex network topology usin
 ## How to Use  
 
 1. **Set Up the Lab**:  
-   Clone the repository and initialize the lab:  
    ```bash
-   git clone https://github.com/your-username/network-lab.git
    cd network-lab
    kathara lab start
    ```  
@@ -56,21 +54,6 @@ This project is a step-by-step implementation of a complex network topology usin
    On `pc1` and `pc2`, connect to the VPN:  
    ```bash
    openvpn --config vpn_client.conf
-   ```  
-
-3. **Generate Traffic**:  
-   Use `netcat` to create traffic:  
-   ```bash
-   # On pc1:
-   nc -l -p 8080  
-   # On pc2:
-   nc <pc1_vpn_ip> 8080  
-   ```  
-
-4. **Capture Traffic**:  
-   On `r1`, run tcpdump to capture VPN traffic:  
-   ```bash
-   tcpdump -i eth0 -w /shared/capture_1.pcap  
    ```  
 
 ## Image for Reference  
